@@ -1,0 +1,36 @@
+{
+  "total_matches_processed": 1200,
+  "total_player_match_instances": 24845,
+  "unique_players_evaluated": 2357,
+  "active_players_in_pool": 2119,
+  "rating_engine_metrics": {
+    "batting_model": {
+      "rmse": 17.579538820202746,
+      "mae": 14.066388758459762,
+      "r2": 0.2299960314532662
+    },
+    "bowling_model": {
+      "rmse": 16.06217506390365,
+      "mae": 12.663863235111048,
+      "r2": 0.17842032305385414
+    }
+  },
+  "rating_band_distribution": {
+    "Squad Player": 1672,
+    "Domestic Star": 211,
+    "International": 173,
+    "Elite": 159,
+    "World Class": 142
+  },
+  "role_distribution": {
+    "Batsman": 1112,
+    "All-Rounder": 780,
+    "Bowler": 465
+  },
+  "valuation_summary": {
+    "min_transfer_value_cr": 1.6,
+    "max_transfer_value_cr": 30.0,
+    "mean_transfer_value_cr": 8.77,
+    "median_transfer_value_cr": 6.89
+  }
+}

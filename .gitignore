@@ -1,0 +1,61 @@
+# =============================================================================
+# Gitignore for Cricket Player Rating & Transfer Value System
+# =============================================================================
+
+# ── Python Bytecode & Cache ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ── Virtual Environments ──
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ── ML Model Training Logs & Artifacts ──
+catboost_info/
+wandb/
+mlruns/
+*.log
+
+# ── Large Intermediate Data Files ──
+# Exclude heavy intermediate walk-forward features
+data/processed/player_walkforward_features.csv
+data/raw/
+*.parquet
+*.h5
+*.feather
+*.tar.gz
+*.zip
+
+# ── Environment & Secrets ──
+.env
+.env.*
+!.env.example
+secrets.toml
+.streamlit/secrets.toml
+
+# ── Jupyter Notebook & Testing Caches ──
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ── Operating System & Editor Files ──
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~

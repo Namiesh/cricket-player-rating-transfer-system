@@ -371,16 +371,20 @@ def main():
                     st.progress(float(min(max(fval / 100.0, 0.0), 1.0)))
 
             idx = p_data.get("valuation_index", 0)
-            st.markdown(f"""
-            **Market Conversion Curve (base INR Crore):**
-            $$\\text{{Index}} = {idx:.1f} / 100 \\implies
-              \\text{{Transfer Value}} = ₹0.20 + (₹30.00 - ₹0.20)
-              \\times \\left({idx / 100:.3f}\\right)^{{2.15}}
-              = \\mathbf{{₹{val_cr:.2f}\\text{{ Cr}}}}$$
-
-            **Converted to {mini_sel.split('–')[0].strip()} → {fmt(val_cr, mini_sel, rates)}**
-            *(1 INR = {rates.get(SUPPORTED_CURRENCIES[mini_sel]['code'], 1.0):.6f} {SUPPORTED_CURRENCIES[mini_sel]['code']})*
-            """)
+            mini_code = SUPPORTED_CURRENCIES[mini_sel]["code"]
+            mini_rate = rates.get(mini_code, 1.0)
+            st.markdown("**Market Conversion Curve (base INR Crore):**")
+            st.latex(
+                rf"\text{{Index}} = {idx:.1f}/100 \implies"
+                rf"\text{{Transfer Value}} = \text{{Rs}}0.20 + (\text{{Rs}}30.00 - \text{{Rs}}0.20)"
+                rf"\times \left({idx / 100:.3f}\right)^{{2.15}}"
+                rf"= \mathbf{{\text{{Rs}}{val_cr:.2f}\text{{ Cr}}}}"
+            )
+            st.caption(
+                f"Converted to {mini_sel.split('–')[0].strip()} → "
+                f"**{fmt(val_cr, mini_sel, rates)}**  "
+                f"(1 INR = {mini_rate:.6f} {mini_code})"
+            )
 
             # ── Full currency table for this player ──────────────────────────
             with st.expander("🌍 See valuation in all 16 supported currencies"):
@@ -491,19 +495,19 @@ def main():
         ### 4. Recent Form Factor Multiplier
         $$\\text{Form Factor} = \\text{clip}\\left(\\frac{\\text{Recent 5 Matches Output}+1}{\\text{Career Avg per 5 Matches}+1},\\ 0.75,\\ 1.25\\right)$$
 
-        ### 5. 7-Factor Market Transfer Value Engine (base: ₹ INR Crore)
+        ### 5. 7-Factor Market Transfer Value Engine (base: INR Crore)
         $$\\text{Index} = \\left(0.50 S_{\\text{perf}} + 0.17 S_{\\text{form}} + 0.10 S_{\\text{context}}
           + 0.08 S_{\\text{consistency}} + 0.05 S_{\\text{experience}}
           + 0.05 S_{\\text{scarcity}} + 0.05 S_{\\text{availability}}\\right) \\times M_{\\text{role}}$$
-        $$\\text{Transfer Value (₹ Cr)} = ₹0.20 + (₹30.00 - ₹0.20)
-          \\times \\left(\\frac{\\text{Index}}{100}\\right)^{2.15}$$
+        $$\\text{Transfer Value} = 0.20 + (30.00 - 0.20)
+          \\times \\left(\\frac{\\text{Index}}{100}\\right)^{2.15} \\quad (\\text{INR Crore})$$
 
         ### 6. Currency Conversion
-        - The **canonical valuation** is always stored and computed in **₹ INR Crore**.
+        - The **canonical valuation** is always stored and computed in **INR Crore (Rs Cr)**.
         - Live exchange rates are fetched from [open.er-api.com](https://open.er-api.com)
           (free, no API key required) and **cached for 60 minutes** per session.
-        - Conversion: Raw INR = Value × 10,000,000 → multiply by live rate → divide by display unit (Crore / Million).
-        - If the network is unavailable, conservative fallback rates are used and a warning is shown.
+        - Conversion: Raw INR = Value x 10,000,000 -> multiply by live rate -> divide by display unit (Crore or Million).
+        - If the network is unavailable, conservative hardcoded fallback rates are used.
         """)
 
         # Show current rate table
